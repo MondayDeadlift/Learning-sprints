@@ -1,0 +1,17 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Launch Debug",
+			"type": "go",
+			"request": "launch",
+			"mode": "debug",
+			"program": "${workspaceFolder}\\API3sprint\\cmd\\url-shortener\\main.go",
+			"env": {
+				"CONFIG_PATH": "${workspaceFolder}\\config\\local.yaml"
+			},
+			"args": [],
+			"buildFlags": "-tags=dev"
+		}
+	]
+}

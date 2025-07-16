@@ -1,0 +1,36 @@
+<!-- index.html -->
+<div id="words-container"></div>
+<input type="text" id="new-word" />
+<button onclick="addWord()">Добавить</button>
+
+<script>
+	async function loadWords() {
+		const response = await fetch('http://localhost:8080/words')
+		const words = await response.json()
+
+		words.forEach(word => {
+			const div = document.createElement('div')
+			div.textContent = `${word.text} (${word.votes})`
+			div.style.color = word.color
+			div.onclick = () => vote(word.id)
+			document.getElementById('words-container').appendChild(div)
+		})
+	}
+
+	async function addWord() {
+		const text = document.getElementById('new-word').value
+		await fetch('/words', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ text }),
+		})
+		loadWords()
+	}
+
+	async function vote(wordId) {
+		await fetch(`/words/${wordId}/vote`, { method: 'POST' })
+		loadWords()
+	}
+
+	loadWords()
+</script>
